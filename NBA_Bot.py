@@ -277,7 +277,7 @@ Total Assists: {assists}
 Total Steals: {steals}
 Total Blocks: {blocks}
 Total Points: {totalPts}
-                    ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = str(list[11]*100), fg3m = list[12], fg3a = list[13], fg3p = str(list[14]*100), ftm = list[15], fta = list[16], ftp = str(list[17]*100), rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-1])
+                    ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-1])
                 else:
                     player_description = """```Games Played: {gamesPlayed}
 Games Started: {gamesStarted} 
