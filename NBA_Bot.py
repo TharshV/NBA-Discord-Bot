@@ -10,19 +10,6 @@ from nba_api.stats.static import*
 import json
 import requests
 
-async def outputList(list):
-    for element in list:
-        await channel.send(element)
-
-async def format_team_dict(team_dict):
-    list = []
-    list.append("\nName: "+team_dict["full_name"])
-    list.append("Year founded: "+str(team_dict["year_founded"]))
-    
-    await outputList(list)
-	
-    return team_dict["id"]
-
 # Global Variables
 channel = None
 channel_id = 0
@@ -257,49 +244,34 @@ Declared retirement in the year: {retirementYear}
                 else:
                 
                     if x%2 == 0:
-                        player_description = """```Games Played: {gamesPlayed}
-    Games Started: {gamesStarted} 
-    Minutes Played: {minsPlayed}
-    Field Goals Made: {fgm}
-    Field Goals Attempted: {fga}
-    Field Goal %: {fgp}
-    3-PT Made: {fg3m}
-    3-PT Attempted: {fg3a}
-    3-PT %: {fg3p}
-    Free Throws Made: {ftm}
-    Free Throws Attempted: {fta}
-    Free Throws %: {ftp}
-    Total Rebounds: {rebounds}
-    Total Assists: {assists}
-    Total Steals: {steals}
-    Total Blocks: {blocks}
-    Total Points: {totalPts}
-                        ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-1])
+                        player_total_pts = list[-1]
+
                     else:
-                        player_description = """```Games Played: {gamesPlayed}
-    Games Started: {gamesStarted} 
-    Minutes Played: {minsPlayed}
-    Field Goals Made: {fgm}
-    Field Goals Attempted: {fga}
-    Field Goal %: {fgp}%
-    3-PT Made: {fg3m}
-    3-PT Attempted: {fg3a}
-    3-PT %: {fg3p}%
-    Free Throws Made: {ftm}
-    Free Throws Attempted: {fta}
-    Free Throws %: {ftp}%
-    Total Rebounds: {rebounds}
-    Total Assists: {assists}
-    Total Steals: {steals}
-    Total Blocks: {blocks}
-    Total Points: {totalPts}
-                        ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-2])
-                    
+                        player_total_pts = list[-2]
+
+                    player_description = """```Games Played: {gamesPlayed}
+Games Started: {gamesStarted} 
+Minutes Played: {minsPlayed}
+Field Goals Made: {fgm}
+Field Goals Attempted: {fga}
+Field Goal %: {fgp}
+3-PT Made: {fg3m}
+3-PT Attempted: {fg3a}
+3-PT %: {fg3p}
+Free Throws Made: {ftm}
+Free Throws Attempted: {fta}
+Free Throws %: {ftp}
+Total Rebounds: {rebounds}
+Total Assists: {assists}
+Total Steals: {steals}
+Total Blocks: {blocks}
+Total Points: {totalPts}
+                    ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-2])
+                
                 playerInfoEmbed.add_field(name = field_name, value = player_description, inline = True)
 
             await channel.send(embed=playerInfoEmbed) 
 
         option2 = False
-
 
 client.run(TOKEN)
