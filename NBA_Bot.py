@@ -210,10 +210,6 @@ Declared retirement in the year: {retirementYear}
         player_dict = players.find_players_by_full_name(user_input)
         player_name = player_dict[0]["full_name"]
         
-        if (player_dict[0]["is_active"] == True):
-            player_status = "Active"
-        else:
-            player_status = "Inactive"
 
         resulting_player_id = player_dict[0]["id"]
         career_data = playercareerstats.PlayerCareerStats(player_id=resulting_player_id)
@@ -232,72 +228,73 @@ Declared retirement in the year: {retirementYear}
 
 
         num_seasons = len(regular_season_data)
-
+        
 
         for season in range(num_seasons):
-
-            embedDescription = """{season}
-Regular Season Team: {regTeam}
-Post Season Team: {postTeam}
-            """.format(season = regular_season_data[season][1], regTeam = regular_season_data[season][4], postTeam = post_season_data[season][4])
 
             playerInfoEmbed = discord.Embed(title=player_name, description=regular_season_data[season][1])
 
             for x in range(4):
+                try:
+
+                    if x == 0:
+                        field_name = "Regular Season Stats"
+                        list = regular_season_data[season]
+                    elif x == 1:
+                        field_name = "Regular Season Rankings"
+                        list = regular_season_rankings[season]
+                        
+                    elif x == 3:
+                        field_name = "Post Season Stats"
+                        list = post_season_data[season]
+                    else:
+                        field_name = "Post Season Rankings"
+                        list = post_season_rankings[season]
                 
-                if x == 0:
-                    list = regular_season_data[season]
-                    field_name = "Regular Season Stats"
-                elif x == 1:
-                    list = regular_season_rankings[season]
-                    field_name = "Regular Season Rankings"
+                except:
+                    player_description = "```N/A```"
+
+                else:
+                
+                    if x%2 == 0:
+                        player_description = """```Games Played: {gamesPlayed}
+    Games Started: {gamesStarted} 
+    Minutes Played: {minsPlayed}
+    Field Goals Made: {fgm}
+    Field Goals Attempted: {fga}
+    Field Goal %: {fgp}
+    3-PT Made: {fg3m}
+    3-PT Attempted: {fg3a}
+    3-PT %: {fg3p}
+    Free Throws Made: {ftm}
+    Free Throws Attempted: {fta}
+    Free Throws %: {ftp}
+    Total Rebounds: {rebounds}
+    Total Assists: {assists}
+    Total Steals: {steals}
+    Total Blocks: {blocks}
+    Total Points: {totalPts}
+                        ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-1])
+                    else:
+                        player_description = """```Games Played: {gamesPlayed}
+    Games Started: {gamesStarted} 
+    Minutes Played: {minsPlayed}
+    Field Goals Made: {fgm}
+    Field Goals Attempted: {fga}
+    Field Goal %: {fgp}%
+    3-PT Made: {fg3m}
+    3-PT Attempted: {fg3a}
+    3-PT %: {fg3p}%
+    Free Throws Made: {ftm}
+    Free Throws Attempted: {fta}
+    Free Throws %: {ftp}%
+    Total Rebounds: {rebounds}
+    Total Assists: {assists}
+    Total Steals: {steals}
+    Total Blocks: {blocks}
+    Total Points: {totalPts}
+                        ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-2])
                     
-                elif x == 3:
-                    list = post_season_data[season]
-                    field_name = "Post Season Stats"
-                else:
-                    list = post_season_rankings[season]
-                    field_name = "Post Season Rankings"
-                
-                if x%2 == 0:
-                    player_description = """```Games Played: {gamesPlayed}
-Games Started: {gamesStarted} 
-Minutes Played: {minsPlayed}
-Field Goals Made: {fgm}
-Field Goals Attempted: {fga}
-Field Goal %: {fgp}%
-3-PT Made: {fg3m}
-3-PT Attempted: {fg3a}
-3-PT %: {fg3p}%
-Free Throws Made: {ftm}
-Free Throws Attempted: {fta}
-Free Throws %: {ftp}%
-Total Rebounds: {rebounds}
-Total Assists: {assists}
-Total Steals: {steals}
-Total Blocks: {blocks}
-Total Points: {totalPts}
-                    ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-1])
-                else:
-                    player_description = """```Games Played: {gamesPlayed}
-Games Started: {gamesStarted} 
-Minutes Played: {minsPlayed}
-Field Goals Made: {fgm}
-Field Goals Attempted: {fga}
-Field Goal %: {fgp}%
-3-PT Made: {fg3m}
-3-PT Attempted: {fg3a}
-3-PT %: {fg3p}%
-Free Throws Made: {ftm}
-Free Throws Attempted: {fta}
-Free Throws %: {ftp}%
-Total Rebounds: {rebounds}
-Total Assists: {assists}
-Total Steals: {steals}
-Total Blocks: {blocks}
-Total Points: {totalPts}
-                    ```""".format(gamesPlayed = list[6], gamesStarted = list[7], minsPlayed = list[8], fgm = list[9], fga = list[10], fgp = list[11], fg3m = list[12], fg3a = list[13], fg3p = list[14], ftm = list[15], fta = list[16], ftp = list[17], rebounds = list[20], assists = list[21], steals = list[22], blocks = list[23], totalPts = list[-2])
-                
                 playerInfoEmbed.add_field(name = field_name, value = player_description, inline = True)
 
             await channel.send(embed=playerInfoEmbed) 
